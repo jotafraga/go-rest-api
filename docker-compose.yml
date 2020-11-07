@@ -1,0 +1,18 @@
+version: "3"
+volumes:
+    data:
+services:
+    mysql:
+        image: mysql:5.7
+        environment:
+            MYSQL_ROOT_USER: root
+            MYSQL_ROOT_PASSWORD: rootpw
+            MYSQL_DATABASE: tcc2020
+            MYSQL_USER: user
+            MYSQL_PASSWORD: userpw
+        ports:
+            - "3306:3306"
+        volumes:
+            - data:/var/lib/postgresql/data
+            - ./database:/scripts
+            - ./database/init.sql:/docker-entrypoint-initdb.d/init.sql

@@ -1,0 +1,130 @@
+{
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "schemes": [
+    "http",
+    "https"
+  ],
+  "swagger": "2.0",
+  "info": {
+    "description": "Essa aplicação é parte de um dos requisitos para obtenção do título de bacharel em Ciência da Computação - Centro Universitário Sagrado Coração.",
+    "title": "GoLang Products API.",
+    "contact": {
+      "name": "João Vitor Fraga",
+      "email": "jvitor_trabalho@hotmail.com"
+    },
+    "version": "1.0.0"
+  },
+  "host": "localhost:8000",
+  "paths": {
+    "/product/{id}": {
+      "get": {
+        "description": "Ao receber um ID, a aplicação retorna o respectivo produto cadastrado no banco.",
+        "tags": [
+          "getProduct"
+        ],
+        "summary": "Retorna um produto específico cadastrado",
+        "operationId": "GetProduct",
+        "responses": {
+          "200": {
+            "$ref": "#/responses/okResp"
+          },
+          "400": {
+            "$ref": "#/responses/badReq"
+          },
+          "404": {
+            "$ref": "#/responses/notFoundReq"
+          }
+        }
+      },
+      "post": {
+        "description": "Ao receber um ID, a aplicação retorna o respectivo produto cadastrado no banco.",
+        "tags": [
+          "createProduct"
+        ],
+        "summary": "Retorna um produto específico cadastrado",
+        "operationId": "CreateProduct",
+        "responses": {
+          "200": {
+            "$ref": "#/responses/okResp"
+          },
+          "400": {
+            "$ref": "#/responses/badReq"
+          },
+          "404": {
+            "$ref": "#/responses/notFoundReq"
+          }
+        }
+      }
+    },
+    "/products": {
+      "get": {
+        "description": "Todos os produtos persistidos no banco serão retonados.",
+        "tags": [
+          "getProduct"
+        ],
+        "summary": "Retornar a lista de produtos cadastrados",
+        "operationId": "GetProducts",
+        "responses": {
+          "200": {
+            "$ref": "#/responses/okResp"
+          },
+          "400": {
+            "$ref": "#/responses/badReq"
+          },
+          "404": {
+            "$ref": "#/responses/notFoundReq"
+          }
+        }
+      }
+    }
+  },
+  "responses": {
+    "badReq": {
+      "description": "Error Bad Request",
+      "schema": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "description": "HTTP status code 400 -  Bad Request",
+            "type": "integer",
+            "format": "int64",
+            "x-go-name": "Code"
+          }
+        }
+      }
+    },
+    "notFoundReq": {
+      "description": "Error Not Found",
+      "schema": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "description": "HTTP status code 404 -  Not Found",
+            "type": "integer",
+            "format": "int64",
+            "x-go-name": "Code"
+          }
+        }
+      }
+    },
+    "okResp": {
+      "description": "Success response",
+      "schema": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "description": "HTTP status code 200 - OK",
+            "type": "integer",
+            "format": "int64",
+            "x-go-name": "Code"
+          }
+        }
+      }
+    }
+  }
+}
