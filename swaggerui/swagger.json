@@ -21,6 +21,38 @@
   },
   "host": "localhost:8000",
   "paths": {
+    "/product": {
+      "post": {
+        "description": "Método recebe os dados do produtos e realiza o cadastro do mesmo.",
+        "tags": [
+          "createProduct"
+        ],
+        "summary": "Realiza a inserção do produto desejado",
+        "operationId": "CreateProduct",
+        "parameters": [
+          {
+            "description": "product to add to the list of products",
+            "name": "product",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Product"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/responses/productRes"
+          },
+          "400": {
+            "$ref": "#/responses/badReq"
+          },
+          "404": {
+            "$ref": "#/responses/notFoundReq"
+          }
+        }
+      }
+    },
     "/product/{id}": {
       "get": {
         "description": "Ao receber um ID, a aplicação retorna o respectivo produto cadastrado no banco.",
@@ -29,9 +61,17 @@
         ],
         "summary": "Retorna um produto específico cadastrado",
         "operationId": "GetProduct",
+        "parameters": [
+          {
+            "description": "id of the product",
+            "name": "id",
+            "in": "path",
+            "required": true
+          }
+        ],
         "responses": {
           "200": {
-            "$ref": "#/responses/okResp"
+            "$ref": "#/responses/productRes"
           },
           "400": {
             "$ref": "#/responses/badReq"
@@ -41,16 +81,60 @@
           }
         }
       },
-      "post": {
-        "description": "Ao receber um ID, a aplicação retorna o respectivo produto cadastrado no banco.",
+      "put": {
+        "description": "Ao receber um ID e o JSON contendo os dados a serem alterados, a aplicação atualiza o respectivo produto cadastrado no banco.",
         "tags": [
-          "createProduct"
+          "updateProduct"
         ],
-        "summary": "Retorna um produto específico cadastrado",
-        "operationId": "CreateProduct",
+        "summary": "Atualiza um produto específico cadastrado",
+        "operationId": "UpdateProduct",
+        "parameters": [
+          {
+            "description": "id of the product",
+            "name": "id",
+            "in": "path",
+            "required": true
+          },
+          {
+            "description": "parameters of a product to be changed",
+            "name": "product",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Product"
+            }
+          }
+        ],
         "responses": {
           "200": {
-            "$ref": "#/responses/okResp"
+            "$ref": "#/responses/productRes"
+          },
+          "400": {
+            "$ref": "#/responses/badReq"
+          },
+          "404": {
+            "$ref": "#/responses/notFoundReq"
+          }
+        }
+      },
+      "delete": {
+        "description": "Ao receber um ID, a aplicação remove o respectivo produto cadastrado no banco.",
+        "tags": [
+          "deleteProduct"
+        ],
+        "summary": "Remove um produto específico",
+        "operationId": "DeleteProduct",
+        "parameters": [
+          {
+            "description": "id of the product",
+            "name": "id",
+            "in": "path",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/responses/productRes"
           },
           "400": {
             "$ref": "#/responses/badReq"
@@ -71,7 +155,7 @@
         "operationId": "GetProducts",
         "responses": {
           "200": {
-            "$ref": "#/responses/okResp"
+            "$ref": "#/responses/productRes"
           },
           "400": {
             "$ref": "#/responses/badReq"
@@ -81,6 +165,38 @@
           }
         }
       }
+    }
+  },
+  "definitions": {
+    "Product": {
+      "type": "object",
+      "title": "Product é a estrutura de Produtos responsável por agrupar dados referente ao produto.",
+      "properties": {
+        "amount": {
+          "type": "integer",
+          "format": "int64",
+          "x-go-name": "Amount"
+        },
+        "description": {
+          "type": "string",
+          "x-go-name": "Description"
+        },
+        "name": {
+          "type": "string",
+          "x-go-name": "Name"
+        },
+        "price": {
+          "type": "number",
+          "format": "double",
+          "x-go-name": "Price"
+        },
+        "productId": {
+          "type": "integer",
+          "format": "int64",
+          "x-go-name": "ProductID"
+        }
+      },
+      "x-go-package": "github.com/jotafraga/go-rest-api/models"
     }
   },
   "responses": {
@@ -113,7 +229,7 @@
       }
     },
     "okResp": {
-      "description": "Success response",
+      "description": "Success Response",
       "schema": {
         "type": "object",
         "properties": {
@@ -124,6 +240,12 @@
             "x-go-name": "Code"
           }
         }
+      }
+    },
+    "productRes": {
+      "description": "Product response payload",
+      "schema": {
+        "$ref": "#/definitions/Product"
       }
     }
   }
