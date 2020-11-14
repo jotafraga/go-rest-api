@@ -59,12 +59,12 @@ func GetProducts(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Context-Type", "application/json")
 	w.Header().Set("Access-Control-Allow-Origin", "*")
 
-	users, err := getProducts()
+	products, err := getProducts()
 	if err != nil {
 		log.Fatalf("ERRO - Falha ao obter lista de produtos. %v", err)
 	}
 
-	json.NewEncoder(w).Encode(users)
+	json.NewEncoder(w).Encode(products)
 }
 
 //CreateProduct ...
